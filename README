@@ -1,0 +1,6 @@
+text2ps, text2pdf: Create PS or PDF files from ASCII files
+
+Features
+========
+
+  * Syntax highlighting (all file types supported by a2ps)
