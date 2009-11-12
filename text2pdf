@@ -5,7 +5,9 @@ set -o errexit
 # debugging
 #set -x
 
-PS2PDF_ARGS="-sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true"
+PS2PDF_ARGS="-sPAPERSIZE=a4 \
+             -dOptimize=true \
+             -dEmbedAllFonts=true"
 INPUT_FILE="$1"
 OUTPUT_FILE="$2"
 
@@ -28,12 +30,12 @@ else
     # check input file
     if [ ! -f "${INPUT_FILE}" ]
     then
-        echo "${INPUT_FILE}: No regular file. Exit."
+        echo "${INPUT_FILE}: not a regular file"
         exit ${EXIT_BADARGS}
     else
         if [ ! -r "${INPUT_FILE}" ]
         then
-            echo "${INPUT_FILE}: No read permission. Exit"
+            echo "${INPUT_FILE}: no read permission"
         fi
     fi
     

@@ -5,7 +5,18 @@ set -o errexit
 # debugging
 #set -x
 
-A2PS_ARGS="--tabsize=4 --portrait --highlight-level=heavy --prologue=color --columns=1 --font-size=11 --media=A4 --chars-per-line=80 --line-numbers=1 --quiet"
+A2PS_ARGS="--tabsize=4 \
+           --portrait \
+           --highlight-level=heavy \
+           --prologue=color \
+           --columns=1 \
+           --rows=1 \
+           --font-size=11 \
+           --media=A4 \
+           --chars-per-line=80 \
+           --line-numbers=1 \
+           --encoding=ASCII
+           --quiet"
 INPUT_FILE="$1"
 OUTPUT_FILE="$2"
 
@@ -27,12 +38,12 @@ else
     # check input file
     if [ ! -f "${INPUT_FILE}" ]
     then
-        echo "${INPUT_FILE}: No regular file. Exit."
+        echo "${INPUT_FILE}: not a regular file"
         exit ${EXIT_BADARGS}
     else
         if [ ! -r "${INPUT_FILE}" ]
         then
-            echo "${INPUT_FILE}: No read permission. Exit"
+            echo "${INPUT_FILE}: no read permission"
         fi
     fi
     
