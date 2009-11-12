@@ -1,26 +1,47 @@
 #!/bin/bash
 # Converts ASCII text files to PostScript
 
+set -o errexit
+# debugging
+#set -x
 
-# check for commandline arguments
-if [ "$#" = 0 ] ; then
-	echo "no target file specified."
-	echo "usage: text2ps file"
+A2PS_ARGS="--tabsize=4 --portrait --highlight-level=heavy --prologue=color --columns=1 --font-size=11 --media=A4 --chars-per-line=80 --line-numbers=1 --quiet"
+INPUT_FILE="$1"
+OUTPUT_FILE="$2"
+
+EXIT_BADARGS=2
+
+
+function print_usage()
+{
+	echo "Invalid number of arguments."
+	echo "Usage: text2ps input_file [ output_file | - ]"
+}
+
+# wrong number of args?
+if [ "$#" = 0 ] || [ "$#" -ge 3 ]
+then
+    print_usage
+    exit ${EXIT_BADARGS}
+else
+    # check input file
+    if [ ! -f "${INPUT_FILE}" ]
+    then
+        echo "${INPUT_FILE}: No regular file. Exit."
+        exit ${EXIT_BADARGS}
+    else
+        if [ ! -r "${INPUT_FILE}" ]
+        then
+            echo "${INPUT_FILE}: No read permission. Exit"
+        fi
+    fi
+    
+    if [ "$#" = 1 ]
+    then
+        OUTPUT_FILE="${INPUT_FILE}.ps"
+    fi
 fi
 
+a2ps ${A2PS_ARGS} --output="${OUTPUT_FILE}" "${INPUT_FILE}"
 
-# do conversion
-for ARG in "$@" ; do
-
-	if [ -f $ARG ] ; then
-		a2ps --tabsize=4 --portrait --highlight-level=heavy --prologue=color --columns=1 --font-size=11 --media=A4 --chars-per-line=80 --line-numbers=1 --output="$ARG.ps" $ARG
-	
-		if [ -f "$ARG.ps" ] ; then
-			echo "$ARG converted. Saved to $ARG.ps"
-		else
-			echo "error: conversion mied have been aborted, new file does not exist"
-		fi
-	else
-		echo "$ARG skipped: file does not exist"
-	fi
-done
+exit $?
