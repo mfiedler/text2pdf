@@ -1,5 +1,5 @@
 #!/bin/bash
-# Converts ASCII text files to PDf
+# Converts ASCII text files to PDF
 
 set -o errexit
 # debugging
