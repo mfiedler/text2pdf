@@ -17,7 +17,9 @@ EXIT_BADARGS=2
 function print_usage()
 {
 	echo "Invalid number of arguments."
-	echo "Usage: text2pdf input_file [ output_file | - ]"
+	echo "Usage: text2pdf [ input_file | - ] [ output_file | - ]"
+    echo
+    echo "Note: 'text2pdf -' is treated as an alias for 'text2pdf - -'"
 }
 
 
@@ -26,22 +28,15 @@ if [ "$#" = 0 ] || [ "$#" -ge 3 ]
 then
     print_usage
     exit ${EXIT_BADARGS}
-else
-    # check input file
-    if [ ! -f "${INPUT_FILE}" ]
-    then
-        echo "${INPUT_FILE}: not a regular file"
-        exit ${EXIT_BADARGS}
-    else
-        if [ ! -r "${INPUT_FILE}" ]
-        then
-            echo "${INPUT_FILE}: no read permission"
-        fi
-    fi
-    
-    if [ "$#" = 1 ]
+fi
+
+if [ "$#" = 1 ]
+then
+    if [ ! "${INPUT_FILE}" = "-" ]
     then
         OUTPUT_FILE="${INPUT_FILE}.pdf"
+    else
+        OUTPUT_FILE="-"
     fi
 fi
 
