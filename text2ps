@@ -17,23 +17,37 @@ A2PS_ARGS="--tabsize=4 \
            --line-numbers=1 \
            --encoding=ASCII
            --quiet"
-INPUT_FILE="$1"
-OUTPUT_FILE="$2"
+FIRST_ARG="$1"
+SECOND_ARG="$2"
+INPUT_FILE="${FIRST_ARG}"
+OUTPUT_FILE="${SECOND_ARG}"
 
+EXIT_SUCCESS=0
+EXIT_ERROR=1
 EXIT_BADARGS=2
 
 
 function print_usage()
 {
-	echo "Invalid number of arguments."
 	echo "Usage: text2ps [ input_file | - ] [ output_file | - ]"
     echo 
     echo "Note: 'text2ps -' is treated as an alias for 'text2ps - -'"
 }
 
+
+# --help
+if [ "${FIRST_ARG}" = "--help" ]
+then
+    print_usage
+    exit ${EXIT_SUCCESS}
+fi
+
+
 # wrong number of args?
 if [ "$#" = 0 ] || [ "$#" -ge 3 ]
 then
+	echo "Invalid number of arguments."
+    echo
     print_usage
     exit ${EXIT_BADARGS}
 fi

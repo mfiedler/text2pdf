@@ -11,21 +11,31 @@ PS2PDF_ARGS="-sPAPERSIZE=a4 \
 INPUT_FILE="$1"
 OUTPUT_FILE="$2"
 
+EXIT_SUCCESS=0
 EXIT_BADARGS=2
 
 
 function print_usage()
 {
-	echo "Invalid number of arguments."
 	echo "Usage: text2pdf [ input_file | - ] [ output_file | - ]"
     echo
     echo "Note: 'text2pdf -' is treated as an alias for 'text2pdf - -'"
 }
 
 
+# --help
+if [ "$1" = "--help" ]
+then
+    print_usage
+    exit ${EXIT_SUCCESS}
+fi
+
+
 # wrong number of args?
 if [ "$#" = 0 ] || [ "$#" -ge 3 ]
 then
+	echo "Invalid number of arguments."
+    echo
     print_usage
     exit ${EXIT_BADARGS}
 fi
