@@ -74,6 +74,15 @@ else
     fi
 fi
 
+if [ ! "${OUTPUT_FILE}" = "-" ]
+then
+    if [ ! -w "${OUTPUT_FILE}" ]
+    then
+        echo "${OUTPUT_FILE}: no write permission"
+        exit ${EXIT_BADARGS}
+    fi
+fi
+
 a2ps ${A2PS_ARGS} --output="${OUTPUT_FILE}" "${INPUT_FILE}"
 
 exit $?
