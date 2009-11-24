@@ -71,28 +71,6 @@ fi
 
 if [ ! "${INPUT_FILE}" = "-" ]
 then
-    # check input file
-    if [ ! -e "${INPUT_FILE}" ]
-    then
-        echo "${INPUT_FILE}: file does not exist"
-        exit ${EXIT_BADARGS}
-    fi
-    if [ ! -f "${INPUT_FILE}" ]
-    then
-        echo "${INPUT_FILE}: not a regular file"
-        exit ${EXIT_BADARGS}
-    fi
-    if [ ! -r "${INPUT_FILE}" ]
-    then
-        echo "${INPUT_FILE}: no read permission"
-        exit ${EXIT_BADARGS}
-    fi
-    if [ ! -s "${INPUT_FILE}" ]
-    then
-        echo "${INPUT_FILE}: file is empty"
-        exit ${EXIT_BADARGS}
-    fi
-    
     if [ "$#" = 1 ]
     then
         OUTPUT_FILE="${INPUT_FILE}.ps"
@@ -102,15 +80,6 @@ else
     if [ "$#" = 1 ]
     then
         OUTPUT_FILE="-"
-    fi
-fi
-
-if [ ! "${OUTPUT_FILE}" = "-" ]
-then
-    if [ ! -w "${OUTPUT_FILE}" ]
-    then
-        echo "${OUTPUT_FILE}: no write permission"
-        exit ${EXIT_BADARGS}
     fi
 fi
 

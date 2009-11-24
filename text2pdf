@@ -67,15 +67,6 @@ then
     fi
 fi
 
-if [ ! "${OUTPUT_FILE}" = "-" ]
-then
-    if [ ! -w "${OUTPUT_FILE}" ]
-    then
-        echo "${OUTPUT_FILE}: no write permission"
-        exit ${EXIT_BADARGS}
-    fi
-fi
-
 text2ps "${INPUT_FILE}" - | ps2pdf ${PS2PDF_ARGS} -sOutputFile="${OUTPUT_FILE}" -
 
 exit $?
